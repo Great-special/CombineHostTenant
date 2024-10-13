@@ -1,0 +1,68 @@
+{% load hosts %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{request.tenant.schema_name}}</title>
+
+
+    <style>
+        .nav-bar {
+            background-color: #333;
+            padding: 10px 0;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+        .nav-links a:hover {
+            background-color: #555;
+        }
+        .current-tenant {
+            margin: 10px;
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-links">
+            {# Main site link #}
+            <a href="{% host_url 'index' %}">Main Site</a>
+
+            {# Non-tenant subdomain links #}
+            <a href="{% host_url 'account_index' host 'account' %}">Accounts</a>
+
+            {# Tenant-specific links #}
+            {% if request.tenant.schema_name != 'public' %}
+                <a href="{% host_url 'tenant_dashboard' host 'tenant' %}">Tenant Dashboard</a>
+                <a href="{% host_url 'tenant_settings' host 'tenant' %}">Tenant Settings</a>
+            {% endif %}
+
+            
+            <!-- {% if user.is_authenticated and user.is_staff %}
+                <div class="tenant-switcher">
+                    <select onchange="switchTenant(this.value)">
+                        <option value="">Switch Tenant</option>
+                        {% for tenant in available_tenants %}
+                            <option value="{{ tenant.domain_url }}:{{port}}">{{ tenant.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %} -->
+        </div> 
+    </nav>
+    <h1>Core Page</h1>
+    <h2>{{request.tenant.schema_name}}</h2>
+    <h2>{{request.tenant}}</h2>
+
+</body>
+</html>
