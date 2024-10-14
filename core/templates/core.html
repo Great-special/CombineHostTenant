@@ -64,5 +64,11 @@
     <h2>{{request.tenant.schema_name}}</h2>
     <h2>{{request.tenant}}</h2>
 
+    {% for tenants in tenants_data %}
+    
+    <p>{{tenants}}</p>
+    
+    {% endfor %}
+
 </body>
 </html>
